@@ -37,14 +37,14 @@ $nav = [
     ], [
         'title' => '页面',
         'icon' => 'fe fe-file',
-        'rtype' => 'admin/extensions',
+        'rtype' => 'admin/pages',
         'children' => [
             [
                 'title' => '新页面',
-                'rtype' => 'admin/home',
+                'rtype' => 'admin/page/write',
             ], [
                 'title' => '管理页面',
-                'rtype' => 'admin/home',
+                'rtype' => 'admin/page/manage',
             ]
         ]
     ], [
@@ -57,7 +57,7 @@ $nav = [
                 'rtype' => 'admin/home',
             ], [
                 'title' => '文集',
-                'rtype' => 'admin/collection',
+                'rtype' => 'admin/collection/manage',
             ], [
                 'title' => '扩展属性',
                 'rtype' => 'admin/field/manage',

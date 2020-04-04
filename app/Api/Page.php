@@ -10,12 +10,12 @@ use App\Service\Field;
 use Core\Middleware\PermissionFilter;
 use Core\Type\Exception\BadRequestException;
 
-class Article
+class Page
 {
-    public const type = "article";
+    public const type = "Page";
     /**
-     * @api {post} /api/admin/article 欢迎界面
-     * @apiPermission api.admin.article.write
+     * @api {post} /api/admin/page 欢迎界面
+     * @apiPermission api.admin.page.write
      * @apiParam {string} title
      * @apiParam {string{1..}} text
      * @apiParam {string} [slug]
@@ -36,7 +36,7 @@ class Article
          */
         $title = $req->title;
         $text = $req->text;
-        $slug = isset($req->slug) ? slug_name($req->slug) : slug_name($title);
+        $slug = isset($req->slug) ? slug_name($req->slug) : slug_name($title);        
         $summary = isset($req->summary) ? $req->summary : null;
         $cover = isset($req->cover) ? $req->cover : null;
         $visible = isset($req->visible) ? boolval($req->visible) : true;
@@ -74,8 +74,8 @@ class Article
         return;
     }
     /**
-     * @api {put} /api/admin/article/@id 欢迎界面
-     * @apiPermission api.admin.article.update
+     * @api {put} /api/admin/page/@id 欢迎界面
+     * @apiPermission api.admin.page.update
      * @apiParam {string} title;
      * @apiParam {string} text;
      * @apiParam {string} [slug];
@@ -85,8 +85,8 @@ class Article
         $this->write($id);
     }
     /**
-     * @api {delete} /api/admin/article/@id 欢迎界面
-     * @apiPermission api.admin.article.delete
+     * @api {delete} /api/admin/page/@id 欢迎界面
+     * @apiPermission api.admin.page.delete
      */
     public function remove($id)
     {
@@ -97,8 +97,8 @@ class Article
         Core::$api->json(["success" => Service::delete($id, self::type)]);
     }
     /**
-     * @api {get} /api/admin/article/list 获取文章列表
-     * @apiPermission api.admin.article.list
+     * @api {get} /api/admin/page/list 获取文章列表
+     * @apiPermission api.admin.page.list
      * @apiParam {Number{1-}} [page=1] 页码
      * @apiParam {Number{1-2000}} [perpage=20] 每页数量
      * @apiParam {Boolean} [countTotal=true] 是否返回总数
@@ -120,8 +120,8 @@ class Article
     }
 
     /**
-     * @api {get} /api/admin/article/@id 获取文章列表
-     * @apiPermission admin.article.get
+     * @api {get} /api/admin/page/@id 获取文章列表
+     * @apiPermission admin.page.get
      */
     public function get($id)
     {
@@ -129,13 +129,5 @@ class Article
         Core::$api->json(
             Factory::CreateContent($content, false, true)
         );
-    }
-    /**
-     * @api {put} /api/admin/article/@id/status 获取文章列表
-     * @apiPermission admin.article.get
-     */
-    public function setStatus()
-    {
-        Core::$api->json([]);
     }
 }

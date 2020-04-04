@@ -1,7 +1,7 @@
 <?php
 /*
     API Parameters rules
-    Auto generated at 2020-04-04 18:14:02
+    Auto generated at 2020-04-04 19:40:13
 */
 return [
     '/api/admin/article' => [
@@ -179,6 +179,91 @@ return [
             '__permission' => 'none',
         ],
     ],
+    '/api/admin/page' => [
+        'POST' => [
+            'title' => [
+                'type' => 'string',
+                'required' => true,
+            ],
+            'text' => [
+                'type' => 'string',
+                'min' => 1,
+                'max' => 0,
+                'required' => true,
+            ],
+            'slug' => [
+                'type' => 'string',
+            ],
+            'summary' => [
+                'type' => 'string',
+            ],
+            'visible' => [
+                'type' => 'boolean',
+            ],
+            'status' => [
+                'type' => 'integer',
+            ],
+            'allowComment' => [
+                'type' => 'boolean',
+            ],
+            'tags' => [
+                'type' => 'array',
+            ],
+            'category' => [
+                'type' => 'integer',
+            ],
+            '__permission' => 'api.admin.page.write',
+        ],
+    ],
+    '/api/admin/page/@id' => [
+        'PUT' => [
+            'title' => [
+                'type' => 'string',
+                'required' => true,
+            ],
+            'text' => [
+                'type' => 'string',
+                'required' => true,
+            ],
+            'slug' => [
+                'type' => 'string',
+            ],
+            '__permission' => 'api.admin.page.update',
+        ],
+        'DELETE' => [
+            '__permission' => 'api.admin.page.delete',
+        ],
+        'GET' => [
+            '__permission' => 'admin.page.get',
+        ],
+    ],
+    '/api/admin/page/list' => [
+        'GET' => [
+            'page' => [
+                'type' => 'integer',
+                'min' => 1,
+                'max' => 0,
+                'default' => 1,
+            ],
+            'perpage' => [
+                'type' => 'integer',
+                'min' => 1,
+                'max' => 2000,
+                'default' => 20,
+            ],
+            'countTotal' => [
+                'type' => 'boolean',
+                'default' => 'true',
+            ],
+            'columns' => [
+                'type' => 'array',
+            ],
+            'where' => [
+                'type' => 'array',
+            ],
+            '__permission' => 'api.admin.page.list',
+        ],
+    ],
     '/archive/@uuid' => [
         'GET' => [
             '__permission' => 'none',
@@ -213,6 +298,11 @@ return [
                 'max' => 0,
                 'required' => true,
             ],
+            '__permission' => 'none',
+        ],
+    ],
+    '/@slug:(.*)\\.html' => [
+        'GET' => [
             '__permission' => 'none',
         ],
     ],
@@ -252,6 +342,11 @@ return [
             '__permission' => 'none',
         ],
     ],
+    '/admin/collection/manage' => [
+        'GET' => [
+            '__permission' => 'admin.collection.manage',
+        ],
+    ],
     '/admin/field/manage' => [
         'GET' => [
             '__permission' => 'admin.article.manage',
@@ -260,6 +355,21 @@ return [
     '/admin(/@page)' => [
         'GET' => [
             '__permission' => 'admin.home.index',
+        ],
+    ],
+    '/admin/page/write(/@id)' => [
+        'GET' => [
+            '__permission' => 'admin.page.write',
+        ],
+    ],
+    '/admin/page/manage' => [
+        'GET' => [
+            '__permission' => 'admin.page.manage',
+        ],
+    ],
+    '/admin/page/manage/page/@page' => [
+        'GET' => [
+            '__permission' => 'none',
         ],
     ],
     '/admin/theme/manage' => [
@@ -280,9 +390,17 @@ return [
         9 => 'api.admin.field.meta.update',
         10 => 'api.admin.field.meta.remove',
         11 => 'api.admin.content.field.get',
-        12 => 'admin.article.write',
-        13 => 'admin.article.manage',
-        14 => 'admin.home.index',
-        15 => 'admin.theme.manage',
+        12 => 'api.admin.page.write',
+        13 => 'api.admin.page.update',
+        14 => 'api.admin.page.delete',
+        15 => 'api.admin.page.list',
+        16 => 'admin.page.get',
+        17 => 'admin.article.write',
+        18 => 'admin.article.manage',
+        19 => 'admin.collection.manage',
+        20 => 'admin.home.index',
+        21 => 'admin.page.write',
+        22 => 'admin.page.manage',
+        23 => 'admin.theme.manage',
     ],
 ];

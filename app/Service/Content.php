@@ -109,11 +109,10 @@ class Content
         }
 
         $offset = ($page - 1) * $perpage;
-        $total = Core::$db->count(self::table, "*", $where);
-
-        $where["LIMIT"] = [$offset, $offset + $perpage];
-
         $where['type'] = $type;
+
+        $total = Core::$db->count(self::table, "*", $where);
+        $where["LIMIT"] = [$offset, $offset + $perpage]; 
         $where['ORDER'] = ["createdAt" => $order];
         $data = Core::$db->select(self::table, $columns, $where);
         return [
@@ -148,6 +147,10 @@ class Content
     public static function getByUUID($uuid)
     {
         return Core::$db->get(self::table, "*", ["uuid" => $uuid]);
+    }
+    public static function getBySlug($slug)
+    {
+        return Core::$db->get(self::table, "*", ["slug" => $slug]);
     }
     public static function delete($id, $type)
     {
