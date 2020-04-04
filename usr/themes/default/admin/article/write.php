@@ -123,7 +123,7 @@
             tags.push(parseInt($(this).val()));
         });
 
-        var page_form = {
+        var article_form = {
             "title": $("#title")[0].value,
             "text": simplemde.value(),
             "slug": $("#slug")[0].value,
@@ -137,18 +137,18 @@
         }
         $.ajax({
             contentType: "application/json; charset=utf-8",
-            type: "<?= isset($page) ? "PUT" : 'POST' ?>",
-            url: "<?= $v->url("api/admin/page/"); ?><?= isset($page) ? $page->id : '' ?>",
-            data: JSON.stringify(page_form),
+            type: "<?= isset($article) ? "PUT" : 'POST' ?>",
+            url: "<?= $v->url("api/admin/article/"); ?><?= isset($article) ? $article->id : '' ?>",
+            data: JSON.stringify(article_form),
             success: (data) => {
                 console.log(data);
                 new Toast({
-                    message: '<?= isset($page) ? '编辑'  : '发布'; ?>成功！',
+                    message: '<?= isset($article) ? '编辑'  : '发布'; ?>成功！',
                     type: 'success'
                 });
-                <?php if (!$page) : ?>
+                <?php if (!$article) : ?>
                     setTimeout(() => {
-                        window.location.href = "<?= $v->url("admin/page/write/"); ?>" + data.id
+                        window.location.href = "<?= $v->url("admin/article/write/"); ?>" + data.id
                     }, 2000);
                 <?php endif; ?>
 
@@ -178,7 +178,7 @@
 
 
 <style>
-    /* .page {
+    /* .article {
         background-color: white;
     }
 
