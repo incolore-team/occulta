@@ -1,7 +1,7 @@
 <?php
 /*
     API Parameters rules
-    Auto generated at 2020-04-04 19:40:13
+    Auto generated at 2020-04-04 20:24:03
 */
 return [
     '/api/admin/article' => [
@@ -87,6 +87,15 @@ return [
                 'type' => 'array',
             ],
             '__permission' => 'api.admin.article.list',
+        ],
+    ],
+    '/api/admin/article/@id/status' => [
+        'PUT' => [
+            'status' => [
+                'type' => 'string',
+                'required' => true,
+            ],
+            '__permission' => 'admin.article.get',
         ],
     ],
     '/api/auth/login' => [
@@ -301,7 +310,7 @@ return [
             '__permission' => 'none',
         ],
     ],
-    '/@slug:(.*)\\.html' => [
+    '/@slug:.*\\.html' => [
         'GET' => [
             '__permission' => 'none',
         ],

@@ -116,18 +116,18 @@
         });
 
     })
-    $("#submit").click(($evt) => {
-        $("#submit").disabled = true;
 
+    function publish(status) {
         var tags = [];
         $.each($("input[name='tag[]']:checked"), function() {
             tags.push(parseInt($(this).val()));
         });
 
-        var article_form = {
+        var page_form = {
             "title": $("#title")[0].value,
             "text": simplemde.value(),
             "slug": $("#slug")[0].value,
+            "status": status,
             "summary": $("#summary")[0].value,
             "cover": $("#cover")[0].value,
             "category": $('#category').find(":selected").val(),
@@ -137,18 +137,18 @@
         }
         $.ajax({
             contentType: "application/json; charset=utf-8",
-            type: "<?= isset($article) ? "PUT" : 'POST' ?>",
-            url: "<?= $v->url("api/admin/article/"); ?><?= isset($article) ? $article->id : '' ?>",
-            data: JSON.stringify(article_form),
+            type: "<?= isset($page) ? "PUT" : 'POST' ?>",
+            url: "<?= $v->url("api/admin/page/"); ?><?= isset($page) ? $page->id : '' ?>",
+            data: JSON.stringify(page_form),
             success: (data) => {
                 console.log(data);
                 new Toast({
-                    message: '<?= isset($article) ? '编辑'  : '发布'; ?>成功！',
+                    message: '<?= isset($page) ? '编辑'  : '发布'; ?>成功！',
                     type: 'success'
                 });
-                <?php if (!$article) : ?>
+                <?php if (!$page) : ?>
                     setTimeout(() => {
-                        window.location.href = "<?= $v->url("admin/article/write/"); ?>" + data.id
+                        window.location.href = "<?= $v->url("admin/page/write/"); ?>" + data.id
                     }, 2000);
                 <?php endif; ?>
 
@@ -165,6 +165,14 @@
                 $("#submit").disabled = false;
             },
         });
+    }
+    $("#saveDraft").click(($evt) => {
+        $("#submit").click($evt);
+        publish(2)
+    });
+    $("#submit").click(($evt) => {
+        $("#submit").disabled = true;
+        publish(0)
     });
 </script>
 

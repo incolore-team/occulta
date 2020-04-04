@@ -12,7 +12,7 @@ use Core\Type\Exception\BadRequestException;
 
 class Page
 {
-    public const type = "Page";
+    public const type = "page";
     /**
      * @api {post} /api/admin/page 欢迎界面
      * @apiPermission api.admin.page.write
@@ -52,7 +52,7 @@ class Page
             $id = Service::create(self::type, $title, $slug, $text, $status, PermissionFilter::$currentUser['id'], $allowComment, $visible, $summary, $cover);
         }
         if (!$id) {
-            throw new BadRequestException("发布失败！");
+            throw new BadRequestException("发布失败！", 400, 400, Core::$db->error());
         }
         /**
          * 更新文章扩展属性

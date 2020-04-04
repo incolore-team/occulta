@@ -28,12 +28,3 @@
 </article>
 
 <?php /*$page->need('comments.php'); */ ?>
-
-<?php
-$prev = $page->prev();
-$next = $page->next();
-?>
-<ul class="post-near">
-    <li>上一篇: <?php if ($prev) : ?><a href="<?= $prev->url; ?>"><?= $prev->title; ?></a><? else : ?>没有了<?php endif; ?></li>
-    <li>下一篇: <?php if ($next) : ?><a href="<?= $next->url; ?>"><?= $next->title; ?></a><? else : ?>没有了<?php endif; ?></li>
-</ul>

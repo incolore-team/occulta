@@ -14,13 +14,14 @@ use flight\util\Collection;
 class Page
 {
     /**
-     * @api {get} /@slug:(.*)\.html 欢迎界面
+     * @api {get} /@slug:.*\.html 欢迎界面
      * @apiName Welcome
      * @apiGroup Welcome
      */
     public function index($slug)
     {
         $slug = substr($slug, 0, strlen($slug) - strlen(".html"));
+
         $raw = ServiceContent::getBySlug($slug);
         if (!$raw) {
             throw new BadRequestException("Not found", 404, 404);

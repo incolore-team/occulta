@@ -14,11 +14,8 @@
             <label class="form-label">标题</label>
             <input value="<?= isset($page) ? htmlspecialchars($page->title) : ''; ?>" type="text" class="form-control" name="title" id="title" placeholder="Text..">
             <div class="flex mt-4">
-                <a href="#slugOption" aria-expanded="false" aria-controls="slugOption" class="" data-toggle="collapse" role="button">Slug</a>
-
-                <div class="row collapse" style=" flex: 1; margin:0;" id="slugOption">
-                    <input id="slug" value="<?= isset($page) ? $page->slug : ''; ?>" style="height: 24px; background:none; margin-left: 1em;" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-                </div>
+                <b>Slug</b>
+                <input id="slug" value="<?= isset($page) ? $page->slug : ''; ?>" style="height: 24px; background:none; margin-left: 1em;" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
             </div>
         </div>
 
@@ -39,15 +36,6 @@
     <div class="row collapse" style="margin:0;" id="editMore">
         <div class="col-md-6 ">
             <div class="form-group">
-                <label class="form-label">分类</label>
-                <select id="category" class="form-control custom-select">
-                    <option value="0">不分类</option>
-                    <?php foreach ($meta->categories as $category) : ?>
-                        <option value="<?= $category->id; ?>" <?= get_category_id($page) == $category->id ? 'selected="selected"' : ''; ?>><?= $category->name; ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            <div class="form-group">
                 <label class="form-label">附图</label>
                 <input id="cover" class="form-control">
                 </input>
@@ -66,17 +54,6 @@
 
         </div>
         <div class="col-md-6 ">
-            <div class="form-group">
-                <label class="form-label">标签</label>
-                <div class="selectgroup selectgroup-pills">
-                    <?php foreach ($meta->tags as $tag) : ?>
-                        <label class="selectgroup-item">
-                            <input type="checkbox" name="tag[]" value="<?= $tag->id; ?>" <?= in_array($tag->id, get_tag_ids($page)) ? 'checked="checked"' : ''; ?>class="selectgroup-input">
-                            <span class="selectgroup-button"><?= $tag->name; ?></span>
-                        </label>
-                    <?php endforeach; ?>
-                </div>
-            </div>
             <div class="form-group">
                 <label class="form-label">页面简介</label>
                 <textarea class="form-control" id="summary" rows="6" placeholder="Content.."><?= isset($page) && $page->summaryRaw ? $page->summaryRaw : ''; ?></textarea>
@@ -118,20 +95,24 @@
     })
 
     function publish(status) {
-        var tags = [];
-        $.each($("input[name='tag[]']:checked"), function() {
-            tags.push(parseInt($(this).val()));
-        });
+        var slug = $("#slug")[0].value
+        if (!slug) {
+            new Toast({
+                message: '请填写 slug',
+                type: 'danger'
+            });
+            return;
+        }
 
         var page_form = {
             "title": $("#title")[0].value,
             "text": simplemde.value(),
-            "slug": $("#slug")[0].value,
+            "slug": slug,
             "status": status,
             "summary": $("#summary")[0].value,
             "cover": $("#cover")[0].value,
-            "category": $('#category').find(":selected").val(),
-            "tags": tags,
+            "category": 0,
+            "tags": [],
             "visible": $("input[name='visible']:checked").length ? true : false,
             "allowComment": $("input[name='allowComment']:checked").length ? true : false
         }

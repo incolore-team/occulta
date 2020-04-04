@@ -112,7 +112,7 @@ class Content
         $where['type'] = $type;
 
         $total = Core::$db->count(self::table, "*", $where);
-        $where["LIMIT"] = [$offset, $offset + $perpage]; 
+        $where["LIMIT"] = [$offset, $offset + $perpage];
         $where['ORDER'] = ["createdAt" => $order];
         $data = Core::$db->select(self::table, $columns, $where);
         return [
@@ -170,5 +170,10 @@ class Content
         if (self::$mdParser) return self::$mdParser;
         self::$mdParser = new \cebe\markdown\Markdown();
         return self::$mdParser;
+    }
+
+    public static function setStatus($id, $status)
+    {
+        return Core::$db->update(self::table, ["status" => $status], ["id" => $id]);
     }
 }

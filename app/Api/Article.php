@@ -52,7 +52,7 @@ class Article
             $id = Service::create(self::type, $title, $slug, $text, $status, PermissionFilter::$currentUser['id'], $allowComment, $visible, $summary, $cover);
         }
         if (!$id) {
-            throw new BadRequestException("发布失败！");
+            throw new BadRequestException("发布失败！", 400, 400, Core::$db->error());
         }
         /**
          * 更新文章扩展属性
@@ -133,9 +133,13 @@ class Article
     /**
      * @api {put} /api/admin/article/@id/status 获取文章列表
      * @apiPermission admin.article.get
+     * @apiParam {string} status
      */
-    public function setStatus()
+    public function setStatus($id)
     {
+        $req = Core::$api->request()->data;
+        $status = intval($req->status);
+        Content::setStatus($id, $status);
         Core::$api->json([]);
     }
 }

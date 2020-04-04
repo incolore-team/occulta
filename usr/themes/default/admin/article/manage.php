@@ -100,6 +100,39 @@
     </div>
 </div>
 <script>
+    function setStatus(id, status) {
+        $.ajax({
+            contentType: "application/json; charset=utf-8",
+            type: "PUT",
+            url: "<?= $v->url("api/admin/article/"); ?>" + id + "/status",
+            data: JSON.stringify({
+                status: status
+            }),
+            success: (data) => {
+                console.log(data);
+                new Toast({
+                    message: '操作成功',
+                    type: 'success'
+                });
+                setTimeout(() => {
+                    window.location.reload();
+
+                }, 1000);
+            },
+            error: (data, status) => {
+                var reason = "";
+                if (data.responseJSON) {
+                    reason = data.responseJSON.message;
+                }
+                new Toast({
+                    message: '发布失败！' + reason,
+                    type: 'danger'
+                });
+                $("#submit").disabled = false;
+            },
+        });
+    }
+
     function deleteArticle(id) {
         $.ajax({
             type: "DELETE",
